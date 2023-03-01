@@ -2,21 +2,15 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
-import { useSession, useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
+import { useSession } from '@supabase/auth-helpers-react'
 import Link from 'next/link'
 import { useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
-export function getStaticProps() {
-  return {
-    props: {
-      posts: [],
-    }
-  }
-}
 
-export default function Home({ posts }) {
+export default function Home({ entries }) {
+  const session = useSession()
 
   return (
     <>
@@ -27,10 +21,6 @@ export default function Home({ posts }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div>
-          <h1>Hello</h1>
-          <p>{posts}</p>
-        </div>
       </main>
     </>
   )

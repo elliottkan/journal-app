@@ -1,13 +1,33 @@
-import { supabase } from './../../lib/supabaseClient';
-import { useUser } from '@supabase/auth-helpers-react';
+import supabase  from '../../lib/supabaseClient';
+import { useSession } from '@supabase/auth-helpers-react';
+
+export async function getStaticProps() {
+
+  const { data: entries, error } = await supabase.from('entries').select('*');
+
+  if (error) {
+    console.log(error);
+  }
+
+  return {
+    props: {
+      entries,
+    }
+  }
+}
 
 function Journal({ entries }) {
-  const user = useUser()
-  console.log(user)
+  const session  = useSession()
+  console.log(session)
+  console.log(entries)
 
   return (
     <>
-      <h1>email = {user.email} and id ={user.id}</h1>
+      <div>
+        <h1>Hello</h1>
+        <p>{JSON.stringify(entries, null, 2)}</p>
+        <p>{session?.user?.id}</p>
+      </div>
       {/* <ul>
         {entries.map((entry) => (
           <li key={entry.id}>{entry.name}</li>
